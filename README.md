@@ -7,7 +7,7 @@ Use something like `cfdisk` to partition. I personally have a boot partition of 
 ```
 mkfs.fat -F 32 /dev/efi_system_partition
 mkswap /dev/swap_partition
-mkfs.xfs /dev/root_partition # you could also do mkfs.ext4 if you want an ext4-filesystem
+mkfs.xfs /dev/root_partition
 ```
 Overview: 
 > ![image](https://github.com/user-attachments/assets/06de0820-613b-439c-9fbb-d3911e1852d6)
