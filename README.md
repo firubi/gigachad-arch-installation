@@ -1,1 +1,1 @@
-# gigachad-arch-installation
+# Arch installation
