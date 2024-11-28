@@ -31,18 +31,10 @@ We'll install everything else after chrooting! In order to generate fstab file, 
 The system is essentially installed, and now you just have to configure it. This is just a matter of following the simple steps [here](https://wiki.archlinux.org/title/Installation_guide#Chroot). Enable multilib by uncommenting the relevant lines in `/etc/pacman.conf`. For nVidia users, you should install the nVidia-drivers. Here is a summary of things you'll probably want: `nvidia-open-dkms nvidia-utils nvidia-settings`. Remember to enable NetworkManager `systemctl enable NetworkManager` ;)
 
 ## Bootloader
-Confirm that you are on UEFI:
-```
-mount -t efivarfs efivarfs /sys/firmware/efi/efivars
-ls /sys/firmware/efi/efivars
-```
-You should see a bunch of entries.
-
 To start, I simply use systemd-boot. First run `bootctl install`. You'll have to manually create an entry in `/boot/loader/entries`. For reference, this is how my `/boot/loader/entries/arch.conf` looks like: 
 ```
 title	Arch
 linux	/vmlinuz-linux
-initrd	/amd-ucode.img
 initrd	/initramfs-linux.img
 options root=PARTUUID=x rw
 ```
