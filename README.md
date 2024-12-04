@@ -9,15 +9,17 @@ mkfs.fat -F 32 /dev/efi_system_partition
 mkswap /dev/swap_partition
 mkfs.xfs /dev/root_partition
 ```
+For a ext4 filesystem, replace mkfs.xfs with mkfs.ext4
+
 Overview: 
 > ![image](https://github.com/user-attachments/assets/06de0820-613b-439c-9fbb-d3911e1852d6)
 
 ## Mounting 
-Using this partition scheme, this is super simple:
+Using this partition scheme, this is super simple. Make sure to mount root before boot:
 ```
+mount /dev/root_partition /mnt
 mount --mkdir /dev/efi_system_partition /mnt/boot
 swapon /dev/swap_partition
-mount /dev/root_partition /mnt
 ```
 
 ## Installing system
