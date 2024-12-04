@@ -27,7 +27,7 @@ We'll keep it simple for now:
 ```
 pacstrap -K /mnt base base-devel linux linux-headers linux-firmware amd-ucode networkmanager nano xfsprogs
 ```
-We'll install everything else after chrooting! In order to generate fstab file, use `genfstab`: `genfstab -U /mnt >> /mnt/etc/fstab`
+If you use ext4, you don't need xfsprogs. We'll install everything else after chrooting! In order to generate fstab file, use `genfstab`: `genfstab -U /mnt >> /mnt/etc/fstab`
 
 ## Chroot, enabling multilib, nVidia and enabling internet
 The system is essentially installed, and now you just have to configure it. This is just a matter of following the simple steps [here](https://wiki.archlinux.org/title/Installation_guide#Chroot). Enable multilib by uncommenting the relevant lines in `/etc/pacman.conf`. For nVidia users, you should install the nVidia-drivers. Here is a summary of things you'll probably want: `nvidia-open-dkms nvidia-utils nvidia-settings`. Remember to enable NetworkManager `systemctl enable NetworkManager` ;)
