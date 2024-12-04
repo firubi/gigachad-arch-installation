@@ -18,8 +18,8 @@ Overview:
 Using this partition scheme, this is super simple. Make sure to mount root before boot:
 ```
 mount /dev/root_partition /mnt
-mount --mkdir /dev/efi_system_partition /mnt/boot
 swapon /dev/swap_partition
+mount --mkdir /dev/efi_system_partition /mnt/boot
 ```
 
 ## Installing system
