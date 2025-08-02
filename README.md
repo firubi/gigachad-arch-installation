@@ -42,7 +42,7 @@ options root=PARTUUID=x rw
 ```
 I recommend adding the last options line with the following command `echo "options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/root_partition) rw" >> /boot/loader/entries/arch.conf`, tips taken from this [video](https://www.youtube.com/watch?v=_JYIAaLrwcY) (about 30 min mark). Edit loader.conf in /boot/loader directory. This Is what mine looks like
 ```
-default @saved
+default arch.conf
 timeout 5
 #console-mode keep
 ```
