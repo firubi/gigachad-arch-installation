@@ -27,6 +27,7 @@ We'll keep it simple for now:
 ```
 pacstrap -K /mnt base base-devel linux linux-headers linux-firmware amd-ucode networkmanager nano xfsprogs
 ```
+Tips: Check out https://wiki.archlinux.org/title/Linux_firmware to see what firmware you need. However, the meta-package is in general recommended. 
 If you use ext4, you don't need xfsprogs. We'll install everything else after chrooting! In order to generate fstab file, use `genfstab`: `genfstab -U /mnt >> /mnt/etc/fstab`
 
 ## Chroot, enabling multilib, nVidia and enabling internet
@@ -46,6 +47,7 @@ default arch.conf
 timeout 5
 #console-mode keep
 ```
+Tips: default @saved can also be used to boot into to the last picked kernel. 
 
 ## Make an account before restarting
 This is the final stretch. First create your mkinitcpio: `mkinitcpio -P`.
