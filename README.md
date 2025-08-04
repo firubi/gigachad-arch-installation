@@ -7,9 +7,8 @@ Use something like `cfdisk` to partition. I personally have a boot partition of 
 ```
 mkfs.fat -F 32 /dev/efi_system_partition
 mkswap /dev/swap_partition
-mkfs.xfs /dev/root_partition
+mkfs.ext4 /dev/root_partition
 ```
-For a ext4 filesystem, replace mkfs.xfs with mkfs.ext4
 
 Overview: 
 > ![image](https://github.com/user-attachments/assets/06de0820-613b-439c-9fbb-d3911e1852d6)
@@ -21,17 +20,18 @@ mount /dev/root_partition /mnt
 swapon /dev/swap_partition
 mount --mkdir /dev/efi_system_partition /mnt/boot
 ```
+Important: You must mount boot partition with option dmask=0077 (-o dmask=0077) to fix permissions. 
 
 ## Installing system
 We'll keep it simple for now:
 ```
-pacstrap -K /mnt base base-devel linux linux-headers linux-firmware amd-ucode networkmanager nano xfsprogs
+pacstrap -K /mnt base base-devel linux linux-headers linux-firmware amd-ucode nano
 ```
 Tips: Check out https://wiki.archlinux.org/title/Linux_firmware to see what firmware you need. However, the meta-package is in general recommended. 
 If you use ext4, you don't need xfsprogs. We'll install everything else after chrooting! In order to generate fstab file, use `genfstab`: `genfstab -U /mnt >> /mnt/etc/fstab`
 
 ## Chroot, enabling multilib, nVidia and enabling internet
-The system is essentially installed, and now you just have to configure it. This is just a matter of following the simple steps [here](https://wiki.archlinux.org/title/Installation_guide#Chroot). Enable multilib by uncommenting the relevant lines in `/etc/pacman.conf`. For nVidia users, you should install the nVidia-drivers. Here is a summary of things you'll probably want: `nvidia-open-dkms nvidia-utils nvidia-settings`. Remember to enable NetworkManager `systemctl enable NetworkManager` ;)
+The system is essentially installed, and now you just have to configure it. This is just a matter of following the simple steps [here](https://wiki.archlinux.org/title/Installation_guide#Chroot). Enable multilib by uncommenting the relevant lines in `/etc/pacman.conf`. For nVidia users, you should install the nVidia-drivers. Here is a summary of things you'll probably want: `nvidia-open-dkms nvidia-utils`. Remember to install and enable NetworkManager `systemctl enable NetworkManager` ;)
 
 ## Bootloader
 To start, I simply use systemd-boot. First run `bootctl install`. You'll have to manually create an entry in `/boot/loader/entries`. For reference, this is how my `/boot/loader/entries/arch.conf` looks like: 
@@ -53,7 +53,7 @@ Tips: default @saved can also be used to boot into to the last picked kernel.
 This is the final stretch. First create your mkinitcpio: `mkinitcpio -P`.
 I suggest setting the root password by simply typing `passwd`. To make a user account:
 ```
-useradd -m -g users -G wheel,storage,power -s /bin/bash name
+useradd -m -G wheel name
 passwd name
 ```
 Edit the wheel group (the top one) by uncommenting it with `EDITOR=nano visudo`. Now reboot into your brand new system!
