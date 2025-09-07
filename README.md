@@ -13,6 +13,8 @@ mkfs.ext4 /dev/root_partition
 Overview: 
 > ![image](https://github.com/user-attachments/assets/06de0820-613b-439c-9fbb-d3911e1852d6)
 
+Alternatively, you may want a swap file instead which is more flexible. In that case, I would just make the root partition bigger to accomodate the swap file. You may also consider zram.
+
 ## Mounting 
 Using this partition scheme, this is super simple. Make sure to mount root before boot:
 ```
