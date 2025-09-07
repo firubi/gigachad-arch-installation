@@ -27,13 +27,12 @@ Important: You must mount boot partition with option dmask=0077 (-o dmask=0077) 
 ## Installing system
 We'll keep it simple for now:
 ```
-pacstrap -K /mnt base base-devel linux linux-headers linux-firmware amd-ucode nano
+pacstrap -K /mnt base 
 ```
-Tips: Check out https://wiki.archlinux.org/title/Linux_firmware to see what firmware you need. However, the meta-package is in general recommended. 
-If you use ext4, you don't need xfsprogs. We'll install everything else after chrooting! In order to generate fstab file, use `genfstab`: `genfstab -U /mnt >> /mnt/etc/fstab`
+We'll install everything else after chrooting! In order to generate fstab file, use `genfstab`: `genfstab -U /mnt >> /mnt/etc/fstab`
 
 ## Chroot, enabling multilib, nVidia and enabling internet
-The system is essentially installed, and now you just have to configure it. This is just a matter of following the simple steps [here](https://wiki.archlinux.org/title/Installation_guide#Chroot). Enable multilib by uncommenting the relevant lines in `/etc/pacman.conf`. For nVidia users, you should install the nVidia-drivers. Here is a summary of things you'll probably want: `nvidia-open-dkms nvidia-utils`. Remember to install and enable NetworkManager `systemctl enable NetworkManager` ;)
+The system is essentially installed, and now you just have to configure it. This is just a matter of following the simple steps [here](https://wiki.archlinux.org/title/Installation_guide#Chroot). Chroot and install some additional pacakges: `base-devel linux linux-headers linux-firmware amd-ucode micro networkmanager`. Enable multilib by uncommenting the relevant lines in `/etc/pacman.conf`. Remember to enable NetworkManager `systemctl enable NetworkManager` ;)
 
 ## Bootloader
 To start, I simply use systemd-boot. First run `bootctl install`. You'll have to manually create an entry in `/boot/loader/entries`. For reference, this is how my `/boot/loader/entries/arch.conf` looks like: 
