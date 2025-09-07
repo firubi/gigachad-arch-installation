@@ -49,6 +49,29 @@ timeout 5
 ```
 Tips: default @saved can also be used to boot into to the last picked kernel. 
 
+### 2025 Revision
+I now use Limine, as it's very versatile. For installation, follow the [wiki](https://wiki.archlinux.org/title/Limine). Packages you will need are `efibootmgr` and `limine`. First, make the directory `mkdir -p /boot/EFI/limine`. Then copy the Limine bootloader from /usr/ like this: `cp /usr/share/limine/BOOTX64.EFI /boot/EFI/limine/`. For a boot entry in UEFI, use efibootmgr:
+```
+efibootmgr \
+--create \
+--disk /dev/sdX \
+--part Y \
+--label "Arch Linux Limine Bootloader" \
+--loader '\EFI\limine\BOOTX64.EFI' \
+--unicode
+```
+Where disk refers to the disk (not partiiton), and part refers to the /boot partition on the disk. Finally, in /boot, the limine.conf file must be created and edited. A simple config file will look like this:
+```
+timeout: 5
+
+/Arch Linux
+    protocol: linux
+    path: boot():/vmlinuz-linux
+    cmdline: root=UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx rw
+    module_path: boot():/initramfs-linux.img
+```
+Again, the UUID of / can be obtained by echoing $(blkid -s UUID -o value /dev/root_partition) to /boot/limine.conf.
+
 ## Make an account before restarting
 This is the final stretch. First create your mkinitcpio: `mkinitcpio -P`.
 I suggest setting the root password by simply typing `passwd`. To make a user account:
@@ -62,3 +85,6 @@ exit
 umount -R /mnt
 reboot
 ```
+
+## Post-instal
+For post-install and tweaks I do after install, check out my [other](https://github.com/firubi/post-install/tree/main) post.
