@@ -86,5 +86,5 @@ umount -R /mnt
 reboot
 ```
 
-## Post-instal
+## Post-install
 For post-install and tweaks I do after install, check out my [other](https://github.com/firubi/post-install/tree/main) post.
